@@ -128,8 +128,8 @@ class HomeScreen extends ConsumerWidget {
                 right: 24,
                 child: FloatingActionButton(
                   onPressed: () {
-                    context.push(
-                      AppRoutes.expenseInput.path,
+                    context.pushNamed(
+                      AppRoutes.expenseInput.name,
                     ); // => '/expense_input'
                   },
                   child: const Icon(Icons.add),
