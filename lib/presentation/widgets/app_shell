@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+final GlobalKey<ScaffoldState> shellScaffoldKey = GlobalKey<ScaffoldState>();
+
+final class AppShell extends StatelessWidget {
+  const AppShell({super.key, required this.navigationShell});
+
+  final StatefulNavigationShell navigationShell;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: shellScaffoldKey,
+      body: navigationShell,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined, size: 25),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sensors, size: 30),
+            label: 'レポート',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings, size: 25),
+            label: '設定',
+          ),
+        ],
+        currentIndex: navigationShell.currentIndex,
+        onTap: (index) {
+          // --- ▼ここから追加▼ ---
+          debugPrint('--- onDestinationSelected called ---');
+          debugPrint('Tapped index: $index');
+          debugPrint('Index BEFORE goBranch: ${navigationShell.currentIndex}');
+          // --- ▲ここまで追加▲ ---
+
+          if (index != navigationShell.currentIndex) {
+            navigationShell.goBranch(index);
+            debugPrint(
+              'Selected index: $index, Current index: ${navigationShell.currentIndex}',
+            );
+          }
+
+          // --- ▼ここから追加▼ ---
+          debugPrint(
+            'Index immediately AFTER goBranch: ${navigationShell.currentIndex}',
+          );
+          // --- ▲ここまで追加▲ ---
+        },
+      ),
+    );
+  }
+}
